@@ -1,3 +1,4 @@
+# Taken from https://docs.k0smotron.io/v1.1.2/install.yaml (1.2.0 crashes)
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -3461,7 +3462,7 @@ spec:
               persistence:
                 description: |-
                   Persistence defines the persistence configuration. If empty k0smotron
-                  will use emptyDir as a volume. See https://docs.k0smotron.io/stable/configuration/#persistence
+                  will use emptyDir as a volume.
                 properties:
                   autoDeletePVCs:
                     default: false
@@ -4549,51 +4550,6 @@ spec:
             type: object
           status:
             properties:
-              conditions:
-                description: Conditions defines current service state of the K0sControlPlane.
-                items:
-                  description: Condition defines an observation of a Cluster API resource
-                    operational state.
-                  properties:
-                    lastTransitionTime:
-                      description: |-
-                        Last time the condition transitioned from one status to another.
-                        This should be when the underlying condition changed. If that is not known, then using the time when
-                        the API field changed is acceptable.
-                      format: date-time
-                      type: string
-                    message:
-                      description: |-
-                        A human readable message indicating details about the transition.
-                        This field may be empty.
-                      type: string
-                    reason:
-                      description: |-
-                        The reason for the condition's last transition in CamelCase.
-                        The specific API may choose whether or not this field is considered a guaranteed API.
-                        This field may not be empty.
-                      type: string
-                    severity:
-                      description: |-
-                        Severity provides an explicit classification of Reason code, so the users or machines can immediately
-                        understand the current situation and act accordingly.
-                        The Severity field MUST be set only when Status=False.
-                      type: string
-                    status:
-                      description: Status of the condition, one of True, False, Unknown.
-                      type: string
-                    type:
-                      description: |-
-                        Type of condition in CamelCase or in foo.example.com/CamelCase.
-                        Many .condition.type values are consistent across resources like Available, but because arbitrary conditions
-                        can be useful (see .node.status.conditions), the ability to deconflict is important.
-                      type: string
-                  required:
-                  - lastTransitionTime
-                  - status
-                  - type
-                  type: object
-                type: array
               controlPlaneReady:
                 type: boolean
               externalManagedControlPlane:
@@ -4603,18 +4559,7 @@ spec:
               ready:
                 description: Ready denotes that the control plane is ready
                 type: boolean
-              readyReplicas:
-                format: int32
-                type: integer
               replicas:
-                format: int32
-                type: integer
-              selector:
-                type: string
-              unavailableReplicas:
-                format: int32
-                type: integer
-              updatedReplicas:
                 format: int32
                 type: integer
               version:
@@ -4624,11 +4569,7 @@ spec:
             - externalManagedControlPlane
             - initialized
             - ready
-            - readyReplicas
             - replicas
-            - selector
-            - unavailableReplicas
-            - updatedReplicas
             - version
             type: object
         type: object
@@ -4906,14 +4847,6 @@ spec:
                         required:
                         - infrastructureRef
                         type: object
-                      updateStrategy:
-                        default: InPlace
-                        description: UpdateStrategy defines the strategy to use when
-                          updating the control plane.
-                        enum:
-                        - InPlace
-                        - Recreate
-                        type: string
                       version:
                         type: string
                     required:
@@ -8374,7 +8307,7 @@ spec:
               persistence:
                 description: |-
                   Persistence defines the persistence configuration. If empty k0smotron
-                  will use emptyDir as a volume. See https://docs.k0smotron.io/stable/configuration/#persistence
+                  will use emptyDir as a volume.
                 properties:
                   autoDeletePVCs:
                     default: false
@@ -12421,7 +12354,7 @@ spec:
                       persistence:
                         description: |-
                           Persistence defines the persistence configuration. If empty k0smotron
-                          will use emptyDir as a volume. See https://docs.k0smotron.io/stable/configuration/#persistence
+                          will use emptyDir as a volume.
                         properties:
                           autoDeletePVCs:
                             default: false
@@ -22205,7 +22138,7 @@ spec:
         env:
         - name: SSH_KNOWN_HOSTS
           value: ""
-        image: quay.io/k0sproject/k0smotron:v1.2.0
+        image: quay.io/k0sproject/k0smotron:v1.1.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -22236,4 +22169,3 @@ spec:
         runAsNonRoot: true
       serviceAccountName: k0smotron-controller-manager
       terminationGracePeriodSeconds: 10
-  
